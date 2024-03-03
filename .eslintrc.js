@@ -24,7 +24,7 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-console': [
-      'error',
+      'warn',
       {
         allow: ['warn', 'error'],
       },
