@@ -19,6 +19,7 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-explicit-any': 0,
     'no-else-return': ['error'],
     'lines-between-class-members': ['error', 'always'],
     'unused-imports/no-unused-imports': 'error',
