@@ -7,5 +7,9 @@ export class CreateCandidateDto {
 
   data_nascimento: Date;
 
+  ultima_data_covid: Date;
+
   senha: string;
+
+  confirmacao_senha: string;
 }

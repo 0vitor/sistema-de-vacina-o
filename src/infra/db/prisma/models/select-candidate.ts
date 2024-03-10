@@ -7,6 +7,7 @@ export const selectProduct: Prisma.CandidatoSelect = {
   cpf: true,
   data_nascimento: true,
   senha: false,
+  ultima_data_covid: true,
   created_at: true,
   updated_at: true,
 };

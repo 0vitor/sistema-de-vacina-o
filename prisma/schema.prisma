@@ -14,12 +14,13 @@ datasource db {
 }
 
 model Candidato {
-  id              String   @id @default(uuid())
-  primeiro_nome   String
-  segundo_nome    String
-  cpf             String   @unique
-  data_nascimento DateTime
-  senha           String
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
+  id                String   @id @default(uuid())
+  primeiro_nome     String
+  segundo_nome      String
+  cpf               String   @unique
+  data_nascimento   DateTime
+  ultima_data_covid DateTime
+  senha             String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
 }

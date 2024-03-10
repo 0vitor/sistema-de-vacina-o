@@ -9,6 +9,8 @@ export class Candidate {
 
   data_nascimento: Date;
 
+  ultima_data_covid: Date;
+
   created_at: Date;
 
   updated_at: Date;
