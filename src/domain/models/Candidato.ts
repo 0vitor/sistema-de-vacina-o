@@ -1,4 +1,4 @@
-export class Candidate {
+export class Candidato {
   id: string;
 
   primeiro_nome: string;

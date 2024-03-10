@@ -1,4 +1,4 @@
-export class CreateCandidateDto {
+export class CreateCandidatoDto {
   primeiro_nome: string;
 
   segundo_nome: string;

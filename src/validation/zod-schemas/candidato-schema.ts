@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const candidateSchema = z
+export const candidatoSchema = z
   .object({
     body: z.object({
       primeiro_nome: z.string({ required_error: 'Formato inválido' }).min(1),

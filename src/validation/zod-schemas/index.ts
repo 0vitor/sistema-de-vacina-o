@@ -1,1 +1,1 @@
-export * from './candidate-schema';
+export * from './candidato-schema';

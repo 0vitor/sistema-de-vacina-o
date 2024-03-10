@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-export const selectProduct: Prisma.CandidatoSelect = {
+export const selectCandidato: Prisma.CandidatoSelect = {
   id: true,
   primeiro_nome: true,
   segundo_nome: true,
