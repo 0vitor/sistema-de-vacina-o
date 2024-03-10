@@ -20,4 +20,6 @@ model Candidato {
   cpf             String   @unique
   data_nascimento DateTime
   senha           String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 }

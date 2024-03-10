@@ -6,6 +6,8 @@ CREATE TABLE "Candidato" (
     "cpf" TEXT NOT NULL,
     "data_nascimento" TIMESTAMP(3) NOT NULL,
     "senha" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Candidato_pkey" PRIMARY KEY ("id")
 );
