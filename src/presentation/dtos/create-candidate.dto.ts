@@ -11,5 +11,5 @@ export class CreateCandidateDto {
 
   senha: string;
 
-  confirmacao_senha: string;
+  confirmacao_senha?: string;
 }
