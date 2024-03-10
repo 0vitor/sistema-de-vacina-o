@@ -24,7 +24,6 @@ export class CandidateController {
 
       return candidate;
     } catch (err: any) {
-      console.log(err);
       throw conflictError(err.message);
     }
   }

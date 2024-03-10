@@ -17,7 +17,6 @@ export const candidateSchema = z.object({
     ultima_data_covid: z.date({
       required_error: 'Formato inválido',
     }),
-    grupos_atendimento: z.array(z.string()),
     confirmacao_senha: z
       .string()
       .min(8, 'Deve conter no mínimo 8 caracteres')
