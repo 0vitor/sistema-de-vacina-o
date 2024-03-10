@@ -4,7 +4,7 @@ import { prisma } from '@src/infra/db/prisma/prisma-client';
 
 import { CreateCandidateDto } from '../dtos/create-candidate.dto';
 import { badRequestError, conflictError } from '../helpers/http-helper';
-import { Validator } from '../protocols/validator';
+import { Validator } from '../protocols/validation';
 
 export class CandidateController {
   constructor(private readonly validator: Validator<CreateCandidateDto>) {}

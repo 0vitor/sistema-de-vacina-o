@@ -14,5 +14,15 @@ export const candidateSchema = z.object({
       .refine((value) => {
         return /[A-Z]/.test(value) && /\d/.test(value);
       }, 'Deve conter pelo menos uma letra maiúscula e um número'),
+    covid_ultimos_30_dias: z.boolean({
+      required_error: 'Deve ser um valor booleano',
+    }),
+    grupos_atendimento: z.array(z.string()),
+    confirmacao_senha: z
+      .string()
+      .min(8, 'Deve conter no mínimo 8 caracteres')
+      .refine((value) => {
+        return /[A-Z]/.test(value) && /\d/.test(value);
+      }, 'Deve conter pelo menos uma letra maiúscula e um número'),
   }),
 });
