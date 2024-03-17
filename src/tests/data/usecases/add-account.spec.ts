@@ -90,4 +90,11 @@ describe('AddAccount Usecase', () => {
       userWithHashedPassword,
     );
   });
+
+  it('Should throw if AddAccountRepository throws', async () => {
+    const { sut, addAccountRepository } = makeSut();
+    jest.spyOn(addAccountRepository, 'add').mockImplementationOnce(throwError);
+
+    expect(sut.add(makeUser())).rejects.toEqual(new Error());
+  });
 });

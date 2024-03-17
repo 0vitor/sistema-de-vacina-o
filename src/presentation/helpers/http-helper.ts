@@ -8,3 +8,9 @@ export const badRequestError = (message: string[]): HttpResponse<HttpError> => {
 export const conflictError = (message: string[]): HttpResponse<HttpError> => {
   return { statusCode: 409, body: { message, error: 'conflict' } };
 };
+
+export const serverError = (
+  message: string[] | string,
+): HttpResponse<HttpError> => {
+  return { statusCode: 500, body: { message, error: 'server error' } };
+};
