@@ -7,6 +7,8 @@ export class Candidato {
 
   cpf: string;
 
+  senha: string;
+
   data_nascimento: Date;
 
   ultima_data_covid: Date;

@@ -11,7 +11,7 @@ interface sutTypes {
   addAccountRepository: AddAccountRepository;
 }
 
-const makeUser = (): CreateCandidatoDto => {
+const makeDto = (): CreateCandidatoDto => {
   const dto = new CreateCandidatoDto();
   dto.cpf = '000.000.000-00';
   dto.primeiro_nome = 'vitor';
@@ -25,10 +25,10 @@ const makeUser = (): CreateCandidatoDto => {
 
 const makeHasher = () => {
   class HasherStub implements Hasher {
-    user: string;
+    dto: string;
 
     async hash(plaintext: string): Promise<string> {
-      this.user = plaintext;
+      this.dto = plaintext;
       return 'hashed_password';
     }
   }
@@ -64,7 +64,7 @@ describe('AddAccount Usecase', () => {
     const { sut, hasherStub } = makeSut();
     const hasherSpy = jest.spyOn(hasherStub, 'hash');
 
-    await sut.add(makeUser());
+    await sut.add(makeDto());
 
     expect(hasherSpy).toHaveBeenCalledWith('valid_password');
   });
@@ -73,28 +73,41 @@ describe('AddAccount Usecase', () => {
     const { sut, hasherStub } = makeSut();
     jest.spyOn(hasherStub, 'hash').mockImplementationOnce(throwError);
 
-    expect(sut.add(makeUser())).rejects.toEqual(new Error());
+    expect(sut.add(makeDto())).rejects.toEqual(new Error());
   });
 
   it('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepository } = makeSut();
     const addAccountRepositorySpy = jest.spyOn(addAccountRepository, 'add');
 
-    const user = makeUser();
-    await sut.add(user);
+    const dto = makeDto();
+    await sut.add(dto);
 
-    const userWithHashedPassword = makeUser();
-    userWithHashedPassword.senha = 'hashed_password';
+    const dtoWithHashedPassword = makeDto();
+    dtoWithHashedPassword.senha = 'hashed_password';
 
-    expect(addAccountRepositorySpy).toHaveBeenCalledWith(
-      userWithHashedPassword,
-    );
+    expect(addAccountRepositorySpy).toHaveBeenCalledWith(dtoWithHashedPassword);
   });
 
   it('Should throw if AddAccountRepository throws', async () => {
     const { sut, addAccountRepository } = makeSut();
     jest.spyOn(addAccountRepository, 'add').mockImplementationOnce(throwError);
 
-    expect(sut.add(makeUser())).rejects.toEqual(new Error());
+    expect(sut.add(makeDto())).rejects.toEqual(new Error());
+  });
+
+  it('Should return a accont on sucess', async () => {
+    const { sut } = makeSut();
+
+    const dto = makeDto();
+    const account: Candidato = await sut.add(dto);
+    const result: Candidato = Object.assign(new Candidato(), dto);
+
+    result.id = 'valid_id';
+    result.senha = 'hashed_password';
+    result.created_at = expect.any(Date);
+    result.updated_at = expect.any(Date);
+
+    expect(account).toEqual(result);
   });
 });
