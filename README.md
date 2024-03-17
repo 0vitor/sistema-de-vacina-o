@@ -18,7 +18,15 @@ Projeto de gerenciemnto de vacina
 ```sh
 docker-compose up -d
 ```
+### Metodologias e Práticas Utilizadas
+
+Durante o desenvolvimento deste projeto, foram aplicadas as seguintes metodologias e práticas:
+
+- **Clean Architecture**: A arquitetura limpa é utilizada como base para a organização e estruturação do código, visando separar as preocupações em camadas distintas e facilitar a manutenção e evolução do sistema.
+- **TDD (Test-Driven Development)**: A prática de desenvolvimento orientada a testes é adotada para escrever testes automatizados antes da implementação do código de produção, garantindo uma cobertura de testes abrangente e promovendo um código mais robusto e confiável.
 
 ### Padrões do projeto
 
-- Repository para isolar a lógica do ORM deve ser criado a pasta repositories.
+- Adapter
+- Repository
+- Factory
