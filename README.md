@@ -18,6 +18,7 @@ Projeto de gerenciemnto de vacina
 ```sh
 docker-compose up -d
 ```
+
 ### Metodologias e Práticas Utilizadas
 
 Durante o desenvolvimento deste projeto, foram aplicadas as seguintes metodologias e práticas:
@@ -30,3 +31,4 @@ Durante o desenvolvimento deste projeto, foram aplicadas as seguintes metodologi
 - Adapter
 - Repository
 - Factory
+- Dependency Injection
