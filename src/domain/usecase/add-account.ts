@@ -1,6 +1,5 @@
-import { CreateCandidatoDto } from '@src/presentation/dtos/create-candidato.dto';
-
-import { Candidato } from '../models';
+import { Candidato } from '@domain/models';
+import { CreateCandidatoDto } from '@presentation/dtos/create-candidato.dto';
 
 export interface AddAccount {
   add(dto: CreateCandidatoDto): Promise<Candidato>;

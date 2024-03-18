@@ -1,10 +1,35 @@
-import { Candidato } from '@src/domain/models';
-import { prisma } from '@src/infra/db/prisma/prisma-client';
-import { ValidationResponse } from '@src/presentation/adapters/zod-validator-adapter';
-import { CandidatoController } from '@src/presentation/controllers/candidato-controller';
-import { CreateCandidatoDto } from '@src/presentation/dtos/create-candidato.dto';
-import { badRequestError } from '@src/presentation/helpers/http-helper';
-import { Validator } from '@src/presentation/protocols/validation';
+import { Candidato } from '@domain/models';
+import { prisma } from '@infra/db/prisma/prisma-client';
+import { ValidationResponse } from '@presentation/adapters/zod-validator-adapter';
+import { CandidatoController } from '@presentation/controllers/candidato-controller';
+import { CreateCandidatoDto } from '@presentation/dtos/create-candidato.dto';
+import { badRequestError } from '@presentation/helpers/http-helper';
+import { Validator } from '@presentation/protocols/validation';
+
+class ValidatorStub implements Validator<CreateCandidatoDto> {
+  body: CreateCandidatoDto;
+
+  result: ValidationResponse = { isValid: true, message: [] };
+
+  validate(body: CreateCandidatoDto): ValidationResponse {
+    this.body = body;
+    return this.result;
+  }
+}
+
+/* class AuthenticationStub implements Authentication {
+  params: AuthenticationParams;
+
+  result: AuthenticationResult = {
+    accessToken: 'spodfkds',
+    name: 'sdsdf',
+  };
+
+  async auth(credentials: AuthenticationParams): Promise<AuthenticationResult> {
+    this.params = credentials;
+    return this.result;
+  }
+ }*/
 
 const mockRequest = (): CreateCandidatoDto => {
   const createCandidatoDto = new CreateCandidatoDto();
@@ -20,18 +45,8 @@ const mockRequest = (): CreateCandidatoDto => {
 };
 
 const makeSut = () => {
-  class ValidatorStub implements Validator<CreateCandidatoDto> {
-    body: CreateCandidatoDto;
-
-    result: ValidationResponse = { isValid: true, message: [] };
-
-    validate(body: CreateCandidatoDto): ValidationResponse {
-      this.body = body;
-      return this.result;
-    }
-  }
-
   const validator = new ValidatorStub();
+  // const authentication = new AuthenticationStub();
   const sut = new CandidatoController(validator);
   return { sut, validator };
 };
@@ -51,20 +66,37 @@ describe('Candidato controller', () => {
     await prisma.candidato.deleteMany();
   });
 
-  it('should return 400 if validation throw', async () => {
+  it('Should return 200 if valid data is provided', async () => {
+    const { sut, validator } = makeSut();
+    const request = mockRequest();
+    await sut.singUp(request);
+    expect(validator.body).toEqual(request);
+  });
+
+  it('should return 400 if validation throw', () => {
     const { sut, validator } = makeSut();
     const error: ValidationResponse = { isValid: false, message: ['error'] };
     validator.result = error;
-    expect(sut.create(mockRequest())).rejects.toEqual(
+    expect(sut.singUp(mockRequest())).rejects.toEqual(
       badRequestError(error.message),
     );
   });
 
-  it('Should return 200 if valid data is provided', async () => {
-    const { sut } = makeSut();
-    const createdCandidato = await sut.create(mockRequest());
-    expect(createdCandidato).toEqual(candidato);
-  });
+  // it('Should call Authentication with correct values', async () => {
+  //   const { sut } = makeSut();
+  //   const result = await sut.singUp(mockRequest());
+  //   const okResponse = {
+  //     accessToken: 'spodfkds',
+  //     name: 'sdsdf',
+  //   };
+  //   expect(result).toEqual(okResponse);
+  // });
+
+  // it('Should return 500 if Authentication throws', async () => {
+  //   const { sut, authentication } = makeSut();
+  //   jest.spyOn(authentication, 'auth').mockImplementationOnce(throwError);
+  //   expect(sut.singUp(mockRequest())).rejects.toEqual(serverError(''));
+  // });
 
   /* it('should check if candidate has more than 18 years old', async () => {
     const createCandidatoDto = new CreateCandidatoDto();

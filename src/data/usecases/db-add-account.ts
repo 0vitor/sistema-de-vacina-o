@@ -1,6 +1,6 @@
-import { Candidato } from '@src/domain/models';
-import { AddAccount } from '@src/domain/usecase/add-account';
-import { CreateCandidatoDto } from '@src/presentation/dtos/create-candidato.dto';
+import { Candidato } from '@domain/models';
+import { AddAccount } from '@domain/usecase/add-account';
+import { CreateCandidatoDto } from '@presentation/dtos/create-candidato.dto';
 
 import { AddAccountRepository } from '../protocols/add-account-respository';
 import { Hasher } from '../protocols/hasher';

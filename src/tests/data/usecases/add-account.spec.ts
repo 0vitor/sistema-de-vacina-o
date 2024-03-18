@@ -1,9 +1,9 @@
-import { AddAccountRepository } from '@src/data/protocols/add-account-respository';
-import { Hasher } from '@src/data/protocols/hasher';
-import { DbAddAccount } from '@src/data/usecases/db-add-account';
-import { Candidato } from '@src/domain/models';
-import { CreateCandidatoDto } from '@src/presentation/dtos/create-candidato.dto';
-import { throwError } from '@src/tests/throw-error';
+import { AddAccountRepository } from '@data/protocols/add-account-respository';
+import { Hasher } from '@data/protocols/hasher';
+import { DbAddAccount } from '@data/usecases/db-add-account';
+import { Candidato } from '@domain/models';
+import { CreateCandidatoDto } from '@presentation/dtos/create-candidato.dto';
+import { throwError } from '@tests/throw-error';
 
 interface sutTypes {
   sut: DbAddAccount;
@@ -82,11 +82,8 @@ describe('AddAccount Usecase', () => {
 
     const dto = makeDto();
     await sut.add(dto);
-
-    const dtoWithHashedPassword = makeDto();
-    dtoWithHashedPassword.senha = 'hashed_password';
-
-    expect(addAccountRepositorySpy).toHaveBeenCalledWith(dtoWithHashedPassword);
+    dto.senha = 'hashed_password';
+    expect(addAccountRepositorySpy).toHaveBeenCalledWith(dto);
   });
 
   it('Should throw if AddAccountRepository throws', async () => {

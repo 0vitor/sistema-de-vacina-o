@@ -1,6 +1,5 @@
+import { throwError } from '@tests/throw-error';
 import bcrypt from 'bcrypt';
-
-import { throwError } from '@src/tests/throw-error';
 
 import { BcryptAdapter } from './bcrypt-adapter';
 

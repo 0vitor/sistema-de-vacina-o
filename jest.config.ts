@@ -15,7 +15,11 @@ const config: Config = {
   coverageProvider: 'v8',
   moduleNameMapper: {
     '^@src/(.*)$': '<rootDir>/src/$1',
-    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@tests/(.*)$': '<rootDir>/src/tests/$1',
+    '^@data/(.*)$': '<rootDir>/src/data/$1',
+    '^@domain/(.*)$': '<rootDir>/src/domain/$1',
+    '^@presentation/(.*)$': '<rootDir>/src/presentation/$1',
+    '^@infra/(.*)$': '<rootDir>/src/infra/$1',
   },
 };
 

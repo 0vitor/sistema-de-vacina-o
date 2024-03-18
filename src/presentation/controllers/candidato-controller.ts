@@ -1,15 +1,19 @@
-import { Candidato } from '@src/domain/models';
-import { selectCandidato } from '@src/infra/db/prisma/models/select-candidato';
-import { prisma } from '@src/infra/db/prisma/prisma-client';
-
-import { CreateCandidatoDto } from '../dtos/create-candidato.dto';
-import { badRequestError, conflictError } from '../helpers/http-helper';
-import { Validator } from '../protocols/validation';
+import { selectCandidato } from '@infra/db/prisma/models/select-candidato';
+import { prisma } from '@infra/db/prisma/prisma-client';
+import { CreateCandidatoDto } from '@presentation/dtos/create-candidato.dto';
+import {
+  badRequestError,
+  serverError,
+} from '@presentation/helpers/http-helper';
+import { Validator } from '@presentation/protocols/validation';
 
 export class CandidatoController {
-  constructor(private readonly validator: Validator<CreateCandidatoDto>) {}
+  constructor(
+    private readonly validator: Validator<CreateCandidatoDto>,
+    // private readonly authentication: Authentication,
+  ) {}
 
-  async create(createCandidatoDto: CreateCandidatoDto): Promise<Candidato> {
+  async singUp(createCandidatoDto: CreateCandidatoDto): Promise<boolean> {
     const { isValid, message } = this.validator.validate(createCandidatoDto);
 
     if (!isValid) {
@@ -19,14 +23,43 @@ export class CandidatoController {
     delete createCandidatoDto.confirmacao_senha;
 
     try {
-      const candidato: Candidato = await prisma.candidato.create({
+      // const { cpf, senha } = createCandidatoDto;
+      // const credentials = { cpf, password: senha };
+      // const result = this.authentication.auth(credentials);
+
+      await prisma.candidato.create({
         data: createCandidatoDto,
         select: selectCandidato,
       });
 
-      return candidato;
+      return true;
     } catch (err: any) {
-      throw conflictError(err.message);
+      throw serverError(err.message);
     }
   }
+
+  /* async checkResearchEligibility(id: string): Promise<boolean> {
+    const candidato: Candidato | null = await prisma.candidato.findFirst({
+      where: { id },
+    });
+
+    if (!candidato) {
+      throw badRequestError(['Candidato não existe']);
+    }
+
+    // const grupos_atendimento = ['']
+    // if(candidato.grupo_atendimento in grupos_atendimento) {
+    // return false
+    // }
+
+    const birthDate = new Date(candidato.data_nascimento);
+    const today = new Date();
+    const ageDifference = today.getFullYear() - birthDate.getFullYear();
+    console.log(birthDate.getFullYear());
+    if (ageDifference > 18) {
+      return true;
+    }
+
+    return false;
+  } */
 }

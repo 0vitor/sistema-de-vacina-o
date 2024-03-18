@@ -1,6 +1,5 @@
+import { Validator } from '@presentation/protocols/validation';
 import { z } from 'zod';
-
-import { Validator } from '../protocols/validation';
 
 export interface ValidationResponse {
   isValid: boolean;

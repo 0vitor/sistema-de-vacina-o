@@ -18,6 +18,11 @@
     "forceConsistentCasingInFileNames": false,
     "strictPropertyInitialization": false,
     "paths": {
+      "@presentation/*": ["src/presentation/*"],
+      "@tests/*": ["src/tests/*"],
+      "@domain/*": ["src/domain/*"],
+      "@infra/*": ["src/infra/*"],
+      "@data/*": ["src/data/*"],
       "@src/*": ["src/*"]
     }
   }
